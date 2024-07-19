@@ -9,9 +9,15 @@ pub struct CreateBookmarkInput<'l> {
     pub parent_id: &'l FolderId,
 }
 
+#[derive(Debug, serde::Serialize)]
+pub struct CreateFolderInput<'l> {
+    pub title: &'l str,
+    pub parent_id: &'l FolderId,
+}
+
 impl Client {
     pub fn get_all_bookmarks(&self) -> DonResult<BookmarkCollection> {
-        self.try_command_and(&LIST_BOOKMARKS_ARGS, |output| {
+        self.try_command_and_then(&LIST_BOOKMARKS_ARGS, |output| {
             serde_json::from_str(&output).map_err(Into::into)
         })
     }
@@ -34,16 +40,47 @@ impl Client {
         Ok(folder)
     }
 
-    pub fn create_bookmark(&self, bookmark: &CreateBookmarkInput) -> DonResult<()> {
-        self.try_command(&[
-            "bookmarks",
-            "create",
-            "bookmark",
-            bookmark.title,
-            bookmark.url,
-            "--parent",
-            bookmark.parent_id,
-        ])
+    pub fn create_bookmark(&self, bookmark: &CreateBookmarkInput) -> DonResult<Bookmark> {
+        self.try_command_and_then(
+            &[
+                "bookmarks",
+                "create",
+                "bookmark",
+                bookmark.title,
+                bookmark.url,
+                "--parent",
+                bookmark.parent_id,
+            ],
+            |id| {
+                Ok(Bookmark {
+                    id: id.into(),
+                    url: bookmark.url.to_string(),
+                    title: bookmark.title.to_string(),
+                    parent_id: Some((*bookmark.parent_id).clone()),
+                })
+            },
+        )
+    }
+
+    pub fn create_folder(&self, folder: &CreateFolderInput) -> DonResult<Folder> {
+        self.try_command_and_then(
+            &[
+                "bookmarks",
+                "create",
+                "folder",
+                folder.title,
+                "--parent",
+                folder.parent_id,
+            ],
+            |id| {
+                Ok(Folder {
+                    id: id.into(),
+                    title: folder.title.to_string(),
+                    parent_id: Some((*folder.parent_id).clone()),
+                    children: vec![],
+                })
+            },
+        )
     }
 
     pub fn delete_bookmark(&self, bookmark_id: &BookmarkId) -> DonResult<()> {

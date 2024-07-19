@@ -1,9 +1,7 @@
-use super::*;
-
 use crate::CONFIG;
 
 use {
-    don_error::{bail, err_msg, try_or_report, DonResult},
+    don_error::*,
     imagesize::size,
     std::{
         fs::{create_dir_all, rename},
@@ -18,11 +16,11 @@ pub fn perform(force_sort_all_wallpapers: bool) -> DonResult<()> {
     if !wallpapers_path.exists() {
         bail!("{} not found on this computer", &CONFIG.wallpapers_dir);
     }
-    let single_dir = wallpapers_path.clone().join(SINGLE_SCREEN);
+    let single_dir = wallpapers_path.clone().join(&CONFIG.single_screen_dir);
     if !single_dir.exists() {
         create_dir_all(&single_dir)?;
     }
-    let dual_dir: PathBuf = wallpapers_path.clone().join(DUAL_SCREEN);
+    let dual_dir: PathBuf = wallpapers_path.clone().join(&CONFIG.dual_screen_dir);
     if !dual_dir.exists() {
         create_dir_all(&dual_dir)?;
     }

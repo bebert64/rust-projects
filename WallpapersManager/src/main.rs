@@ -1,6 +1,6 @@
 use wallpapers_manager::{
-    scrapers::download_all,
-    wallpapers::{choose_every_x_min, choose_once, sort as sort_wallpapers, ChooseMode},
+    change_wallpaper_every_n_minutes, change_wallpaper_once, download_wallpapers, sort_wallpapers,
+    ChangeMode,
 };
 
 use {
@@ -20,16 +20,16 @@ enum Commands {
         #[arg(short, long, default_value = "false")]
         force_sort_all_wallpapers: bool,
     },
-    Choose {
+    Change {
         #[arg(short, long, default_value = "proportionate-to-number-of-files")]
-        mode: ChooseMode,
+        mode: ChangeMode,
     },
-    Scrap,
+    Download,
     Cron {
         #[arg(short = 'd', long)]
         minutes: u64,
         #[arg(short, long, default_value = "proportionate-to-number-of-files")]
-        mode: ChooseMode,
+        mode: ChangeMode,
     },
 }
 
@@ -39,9 +39,9 @@ fn main() -> DonResult<()> {
         Commands::Sort {
             force_sort_all_wallpapers,
         } => sort_wallpapers(force_sort_all_wallpapers)?,
-        Commands::Choose { mode } => choose_once(&mode)?,
-        Commands::Cron { minutes, mode } => choose_every_x_min(minutes, &mode)?,
-        Commands::Scrap => download_all()?,
+        Commands::Change { mode } => change_wallpaper_once(&mode)?,
+        Commands::Cron { minutes, mode } => change_wallpaper_every_n_minutes(minutes, &mode)?,
+        Commands::Download => download_wallpapers()?,
     }
     Ok(())
 }

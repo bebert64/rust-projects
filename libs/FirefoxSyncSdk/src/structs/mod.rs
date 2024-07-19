@@ -33,7 +33,7 @@ pub struct Folder {
     pub title: String,
     #[serde(rename = "parentid", default)]
     pub parent_id: Option<FolderId>,
-    children: Vec<Box<BookmarkOrFolder>>,
+    pub(crate) children: Vec<Box<BookmarkOrFolder>>,
 }
 
 impl Folder {

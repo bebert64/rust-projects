@@ -9,6 +9,14 @@ pub struct DonErrorContext<'l> {
 pub trait FromRefDonErrorContextPairT {
     fn to_owned(&self) -> (String, serde_json::Value);
 }
+impl<K: std::fmt::Display, V> FromRefDonErrorContextPairT for DonErrorContextPair<K, V>
+where
+    for<'l> &'l V: Into<serde_json::Value>,
+{
+    fn to_owned(&self) -> (String, serde_json::Value) {
+        (self.key.to_string(), (&self.value).into())
+    }
+}
 // impl<K: std::fmt::Display, V> FromRefDonErrorContextPairT for DonErrorContextPair<K, V>
 // where
 //     for<'l> &'l V: Into<serde_json::Value>,

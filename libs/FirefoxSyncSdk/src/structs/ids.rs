@@ -5,7 +5,7 @@ use {
 
 macro_rules! id {
     ($name:ident) => {
-        #[derive(Debug, Serialize, Deserialize)]
+        #[derive(Debug, Serialize, Deserialize, Clone)]
         #[serde(from = "String")]
         pub struct $name {
             inner: String,

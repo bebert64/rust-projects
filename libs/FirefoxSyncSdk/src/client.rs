@@ -1,7 +1,7 @@
 use {don_error::*, std::process::Command};
 
 const FF_SYNC_COMMAND: &str = "ffsclient";
-const TRUNCATE_OUTPUT_TO_CHARS: usize = 2000;
+const TRUNCATE_STDERR_OUTPUT_TO_CHARS: usize = 2000;
 
 #[derive(Debug, serde::Deserialize)]
 pub struct Client {
@@ -22,15 +22,15 @@ impl Client {
         command
     }
 
-    pub(crate) fn try_command_and<D>(
+    pub(crate) fn try_command_and_then<D>(
         &self,
         args: &[&str],
         on_successful_output: impl Fn(String) -> DonResult<D>,
     ) -> DonResult<D> {
-        self.try_command_and_inner(args, on_successful_output, false)
+        self.try_command_and_then_inner(args, on_successful_output, false)
     }
 
-    pub(crate) fn try_command_and_inner<D>(
+    pub(crate) fn try_command_and_then_inner<D>(
         &self,
         args: &[&str],
         on_successful_output: impl Fn(String) -> DonResult<D>,
@@ -46,11 +46,11 @@ impl Client {
             // to login doesn't cost that much
             if !has_already_tried_to_login {
                 self.login()?;
-                self.try_command_and_inner(args, on_successful_output, true)
+                self.try_command_and_then_inner(args, on_successful_output, true)
             } else {
                 Err(err_msg!("{}", {
                     let mut stderr = String::from_utf8_lossy(&output.stderr).to_string();
-                    stderr.truncate(TRUNCATE_OUTPUT_TO_CHARS);
+                    stderr.truncate(TRUNCATE_STDERR_OUTPUT_TO_CHARS);
                     stderr
                 }))
             }
@@ -58,6 +58,6 @@ impl Client {
     }
 
     pub(crate) fn try_command(&self, args: &[&str]) -> DonResult<()> {
-        self.try_command_and(args, |_| Ok(()))
+        self.try_command_and_then(args, |_| Ok(()))
     }
 }
