@@ -1,0 +1,13 @@
+[package]
+	edition = "2021"
+	name = "don_error_derive"
+	version = "0.1.0"
+	workspace = "../../../.cargo/workspace"
+
+[dependencies]
+	proc-macro2.workspace = true
+	quote.workspace = true
+	syn.workspace = true
+
+[lib]
+	proc-macro = true

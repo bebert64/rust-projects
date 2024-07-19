@@ -1,0 +1,95 @@
+[workspace]
+	resolver = "1"
+
+	members = [
+		"../../WallpapersManager",
+		"../../libs/ActixHelpers",
+		"../../libs/ConfigHelpers",
+		"../../libs/DieselHelpers",
+		"../../libs/FirefoxSyncSdk",
+		"../../libs/don_error/Crate",
+		"../../libs/don_error/Derive",
+	]
+
+	[workspace.dependencies]
+		set_core = { path = "../../set/Core" }
+
+		actix_helpers = { path = "../../libs/ActixHelpers" }
+		config_helpers = { path = "../../libs/ConfigHelpers" }
+		diesel_helpers = { path = "../../libs/DieselHelpers" }
+		don_error = { path = "../../libs/don_error/Crate" }
+		don_error_derive = { path = "../../libs/don_error/Derive" }
+		firefox_sync_sdk = { path = "../../libs/FirefoxSyncSdk" }
+
+		actix = "0.13"
+		actix-cors = "0.7"
+		actix-web = "4"
+		actix-web-actors = "4"
+		anyhow = "1"
+		argon2 = "0.5"
+		chrono = "0.4"
+		clap = { version = "4", features = ["cargo", "derive"] }
+		config = "0.14"
+		deezer_downloader = "0.1"
+		derive_deref = "1.1"
+		diesel = { git = "https://github.com/Ten0/diesel", branch = "for_stockly_main", features = ["postgres"] }
+		diesel-derive-enum = { git = "https://github.com/Ten0/diesel-derive-enum/", branch = "support_auto_queryid_derive", features = [
+			"postgres",
+		] }
+		diesel-enum = "0.2"
+		dotenv = "0.15"
+		fd-lock = "4"
+		futures = "0.3"
+		gloo = "0.11"
+		gloo-events = "0.2"
+		gloo-timers = "0.3"
+		gloo-utils = "0.2"
+		graphql_client = "0.14"
+		homedir = "0.2"
+		id3 = "1"
+		image = "0.25"
+		image_hasher = "2.0.0"
+		imagesize = "0.13"
+		itertools = "0.13"
+		js-sys = "0.3"
+		lazy_static = "1"
+		oshash = "0.1"
+		paste = "1"
+		patternfly-yew = "0.6"
+		proc-macro2 = "1"
+		quote = "1"
+		rand = "0.8"
+		regex = "1"
+		reqwasm = "0.5"
+		reqwest = "0.12"
+		scraper = "0.19"
+		serde = "1"
+		serde-hjson = "0.9"
+		serde_json = "1.0"
+		serde_qs = "0.13"
+		sha256 = "1"
+		size_format = "1"
+		strum = "0.26"
+		strum_macros = "0.26"
+		syn = "2"
+		tauri = "1"
+		tauri-build = "1.4.0"
+		tetra = "0.8"
+		thirtyfour = "0.32"
+		thiserror = "1"
+		tokio = { version = "1", features = ["full"] }
+		toml = "0.8"
+		try_or_wrap = "0.0.5"
+		try_or_wrap_s = "0.2"
+		url = "2"
+		vid_dup_finder_lib = "0.1"
+		walkdir = "2"
+		wasm-bindgen = "0.2"
+		wasm-bindgen-futures = "0.4"
+		web-sys = "0.3"
+		web-time = "1"
+		yew = { version = "0.21", features = ["csr"] }
+		yew-hooks = "0.3"
+		yew-nested-router = "0.7"
+		yewdux = "0.10"
+		zip = "2"

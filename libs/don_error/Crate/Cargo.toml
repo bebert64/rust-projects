@@ -1,0 +1,20 @@
+[package]
+	edition = "2021"
+	name = "don_error"
+	version = "0.1.0"
+	workspace = "../../../.cargo/workspace"
+
+[features]
+	actix = ["dep:actix-web"]
+	yew = ["dep:web-sys"]
+
+[dependencies]
+	don_error_derive.workspace = true
+
+	actix-web = { workspace = true, optional = true }
+	anyhow.workspace = true
+	derive_deref.workspace = true
+	serde.workspace = true
+	serde_json.workspace = true
+	try_or_wrap.workspace = true
+	web-sys = { workspace = true, optional = true }

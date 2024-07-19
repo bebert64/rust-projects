@@ -1,0 +1,21 @@
+[package]
+	edition = "2021"
+	name = "wallpapers_manager"
+	version = "0.1.0"
+	workspace = "../.cargo/workspace"
+
+[dependencies]
+	config_helpers.workspace = true
+	don_error.workspace = true
+	firefox_sync_sdk.workspace = true
+
+	clap.workspace = true
+	dotenv.workspace = true
+	fd-lock.workspace = true
+	imagesize.workspace = true
+	rand.workspace = true
+	reqwest = { workspace = true, features = ["blocking"] }
+	scraper.workspace = true
+	serde.workspace = true
+	tetra.workspace = true
+	url.workspace = true

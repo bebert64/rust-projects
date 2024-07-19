@@ -1,0 +1,11 @@
+[package]
+	edition = "2021"
+	name = "firefox_sync_sdk"
+	version = "0.1.0"
+	workspace = "../../.cargo/workspace"
+
+[dependencies]
+	don_error.workspace = true
+
+	serde = { workspace = true, features = ["derive"] }
+	serde_json.workspace = true

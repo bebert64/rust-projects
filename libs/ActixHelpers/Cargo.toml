@@ -1,0 +1,11 @@
+[package]
+	edition = "2021"
+	name = "actix_helpers"
+	version = "0.1.0"
+	workspace = "../../.cargo/workspace"
+
+[dependencies]
+	don_error = { workspace = true, features = ["actix"] }
+
+	actix-cors.workspace = true
+	actix-web.workspace = true
