@@ -17,11 +17,11 @@ pub fn perform(force_sort_all_wallpapers: bool) -> DonResult<()> {
     if !wallpapers_path.exists() {
         bail!("{} not found on this computer", &CONFIG.wallpapers_dir);
     }
-    let single_dir = wallpapers_path.clone().join(&CONFIG.single_screen_dir);
+    let single_dir = wallpapers_path.join(&CONFIG.single_screen_dir);
     if !single_dir.exists() {
         create_dir_all(&single_dir)?;
     }
-    let dual_dir: PathBuf = wallpapers_path.clone().join(&CONFIG.dual_screen_dir);
+    let dual_dir: PathBuf = wallpapers_path.join(&CONFIG.dual_screen_dir);
     if !dual_dir.exists() {
         create_dir_all(&dual_dir)?;
     }
@@ -31,20 +31,20 @@ pub fn perform(force_sort_all_wallpapers: bool) -> DonResult<()> {
         move_all_files(&dual_dir, &wallpapers_path)?;
     }
 
-    for img_path in
-        get_file_paths(&wallpapers_path).filter(|img_path| !img_path.ends_with("Thumbs.db"))
-    {
-        try_or_report(|| {
-            let img_dimensions = size(&img_path)
-                .map_err(|err| err_msg!("Problem with img {img_path:#?} : {err:#?}"))?;
-            if img_dimensions.width as f64 / img_dimensions.height as f64 <= RATIO_LIMIT {
-                move_to(&img_path, &single_dir)?;
-            } else {
-                move_to(&img_path, &dual_dir)?;
-            };
-            Ok(())
-        })
-    }
+    get_file_paths(&wallpapers_path)
+        .filter(|img_path| !img_path.ends_with("Thumbs.db"))
+        .for_each(|img_path| {
+            try_or_report(|| {
+                let img_dimensions = size(&img_path)
+                    .map_err(|err| err_msg!("Problem with img {img_path:#?} : {err:#?}"))?;
+                if img_dimensions.width as f64 / img_dimensions.height as f64 <= RATIO_LIMIT {
+                    move_to(&img_path, &single_dir)?;
+                } else {
+                    move_to(&img_path, &dual_dir)?;
+                };
+                Ok(())
+            })
+        });
 
     Ok(())
 }
