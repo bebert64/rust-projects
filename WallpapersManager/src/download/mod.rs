@@ -42,7 +42,7 @@ pub fn perform() -> DonResult<()> {
                 Some("wallpaperflare") => {
                     download_and_delete_bookmark(client, wallpaper_flare::download, bookmark)?
                 }
-                _ => client.move_bookmark(&bookmark, &unsupported_domains_folder)?,
+                _ => client.move_bookmark(bookmark, unsupported_domains_folder)?,
             }
         }
     }
@@ -58,8 +58,7 @@ fn download_file(link_to_file: &str) -> DonResult<()> {
         CONFIG.wallpapers_dir,
         link_to_file
             .split('/')
-            .rev()
-            .next()
+            .next_back()
             .ok_or_don_err("split never returns empty iterator")?
     ))?;
     reqwest::blocking::get(link_to_file)?.copy_to(&mut wallpaper)?;

@@ -68,6 +68,7 @@ impl DonError {
         self.add_ctx_pair_inner(key, value);
     }
 
+    #[allow(clippy::map_entry)] // Using Entry would require to do one more clone of key
     fn add_ctx_pair_inner(&mut self, key: String, value: serde_json::Value) {
         if self.context.contains_key(&key) {
             use std::collections::btree_map::Entry;

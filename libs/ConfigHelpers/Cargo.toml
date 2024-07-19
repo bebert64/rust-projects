@@ -8,6 +8,7 @@
 	don_error.workspace = true
 
 	config.workspace = true
-	homedir.workspace = true
+	directories.workspace = true
 	lazy_static.workspace = true
 	serde.workspace = true
+	walkdir.workspace = true

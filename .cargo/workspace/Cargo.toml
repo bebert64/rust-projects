@@ -37,6 +37,7 @@
 			"postgres",
 		] }
 		diesel-enum = "0.2"
+		directories = "5"
 		dotenv = "0.15"
 		fd-lock = "4"
 		futures = "0.3"
@@ -45,7 +46,6 @@
 		gloo-timers = "0.3"
 		gloo-utils = "0.2"
 		graphql_client = "0.14"
-		homedir = "0.2"
 		id3 = "1"
 		image = "0.25"
 		image_hasher = "2.0.0"

@@ -30,6 +30,7 @@ impl Db {
 }
 
 #[macro_export]
+#[allow(clippy::crate_in_macro_def)]
 macro_rules! db {
     () => {
         use $crate::{

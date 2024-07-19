@@ -13,9 +13,11 @@
 	dotenv.workspace = true
 	fd-lock.workspace = true
 	imagesize.workspace = true
+	itertools.workspace = true
 	rand.workspace = true
 	reqwest = { workspace = true, features = ["blocking"] }
 	scraper.workspace = true
 	serde.workspace = true
 	tetra.workspace = true
 	url.workspace = true
+	walkdir.workspace = true

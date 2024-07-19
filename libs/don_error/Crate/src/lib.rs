@@ -11,6 +11,7 @@ pub use {
 };
 
 #[cfg(any(feature = "actix", feature = "yew"))]
+#[allow(unused)]
 pub use helpers::*;
 
 #[cfg(feature = "actix")]

@@ -15,7 +15,7 @@ impl Client {
     }
 
     fn ffsclient_command(&self, args: &[&str]) -> Command {
-        let mut command = Command::new(&FF_SYNC_COMMAND);
+        let mut command = Command::new(FF_SYNC_COMMAND);
         args.iter().for_each(|arg| {
             command.arg(arg);
         });

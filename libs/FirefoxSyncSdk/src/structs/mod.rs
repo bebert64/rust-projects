@@ -33,30 +33,26 @@ pub struct Folder {
     pub title: String,
     #[serde(rename = "parentid", default)]
     pub parent_id: Option<FolderId>,
-    pub(crate) children: Vec<Box<BookmarkOrFolder>>,
+    pub(crate) children: Vec<BookmarkOrFolder>,
 }
 
 impl Folder {
     pub fn bookmarks(&self) -> impl Iterator<Item = &Bookmark> {
-        self.children
-            .iter()
-            .filter_map(|child| match child.as_ref() {
-                BookmarkOrFolder::Bookmark(bookmark) => Some(bookmark),
-                BookmarkOrFolder::Folder(_folder) => None,
-            })
+        self.children.iter().filter_map(|child| match child {
+            BookmarkOrFolder::Bookmark(bookmark) => Some(bookmark),
+            BookmarkOrFolder::Folder(_folder) => None,
+        })
     }
 
     pub fn sub_folders(&self) -> impl Iterator<Item = &Folder> {
-        self.children
-            .iter()
-            .filter_map(|child| match child.as_ref() {
-                BookmarkOrFolder::Folder(folder) => Some(folder),
-                BookmarkOrFolder::Bookmark(_bookmark) => None,
-            })
+        self.children.iter().filter_map(|child| match child {
+            BookmarkOrFolder::Folder(folder) => Some(folder),
+            BookmarkOrFolder::Bookmark(_bookmark) => None,
+        })
     }
 
     pub fn into_sub_folders(self) -> impl Iterator<Item = Folder> {
-        self.children.into_iter().filter_map(|child| match *child {
+        self.children.into_iter().filter_map(|child| match child {
             BookmarkOrFolder::Folder(folder) => Some(folder),
             BookmarkOrFolder::Bookmark(_bookmark) => None,
         })
