@@ -14,6 +14,7 @@ use {
 pub fn perform() -> DonResult<()> {
     let client = &CONFIG.firefox_sync_client;
     let to_download = client.get_folder("toolbar/Wallpaper/Download")?;
+    // TODO : Folder::get_or_create_subfolder
     let unsupported_domains_folder = match to_download
         .sub_folders()
         .find(|folder| folder.title == "Unsupported domains")
@@ -30,6 +31,7 @@ pub fn perform() -> DonResult<()> {
         bookmark: &Bookmark,
     ) -> DonResult<()> {
         download_fn(&bookmark.url)?;
+        // TODO : Bookmark::delete
         client.delete_bookmark(&bookmark.id)
     }
     for bookmark in to_download.bookmarks() {
@@ -42,6 +44,7 @@ pub fn perform() -> DonResult<()> {
                 Some("wallpaperflare") => {
                     download_and_delete_bookmark(client, wallpaper_flare::download, bookmark)?
                 }
+                // TODO Bookmark::move
                 _ => client.move_bookmark(bookmark, unsupported_domains_folder)?,
             }
         }
